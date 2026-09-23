@@ -9,24 +9,15 @@
 
 using namespace std;
 
-struct tNacimientos{
-    int anyo;
-    long long int nacimientos;
-};
-
-
 // función que resuelve el problema
-int resolver(const vector<tNacimientos> & datos, int anyo1, int anyo2) {
+//Tiene una complejidad constante al no acceder a valores en bucles.
+long long int resolver(const vector<long long int> & datos, int anyo_min, int cota_baja, int cota_alta) {
     
-    int i = 0;
-    int acum = 0;
-    bool salir = false;
-    while(i < datos.size() && !salir){
-        if(anyo1 <= datos[i].anyo && datos[i].anyo <= anyo2) acum += datos[i].nacimientos;
-        else if(datos[i].anyo > anyo2) salir = true;
-        i++;
-    }
-    return acum;
+    int i = cota_baja - anyo_min;
+    long long int ret = datos[cota_alta - anyo_min];
+    if(i != 0)
+        ret -= datos[i - 1];
+    return ret;
 
 }
 
@@ -34,37 +25,33 @@ int resolver(const vector<tNacimientos> & datos, int anyo1, int anyo2) {
 // configuración, y escribiendo la respuesta
 bool resuelveCaso() {
     // leer los datos de la entrada
-    int anyo1, anyo2, n = 0, e = 0;
-    cin >> anyo1;
-    cin >> anyo2;
+    int anyo_min, anyo_max;
+    vector<long long int> datos;
+    cin >> anyo_min >> anyo_max;
 
-    vector<tNacimientos> v;
-    vector<int> anyos;
-
-    if (anyo1 == 0 && anyo2 == 0)
+    if (anyo_min == 0 && anyo_max == 0)
         return false;
     
-    n = (anyo2 - anyo1) + 1;
-    
-    for(int i = 0; i < n; i++){
-        tNacimientos nacimiento;
-        cin >> nacimiento.nacimientos;
-        nacimiento.anyo = anyo1 + i;
-        v.push_back(nacimiento);
+    //La preparación de los datos tiene coste lineal en el número de datos que tiene el parque.
+    int n_anyos = anyo_max - anyo_min + 1;
+    long long int acum = 0, elem;
+    for(int i = 0; i < n_anyos; i++){
+        cin >> elem;
+        acum += elem;
+        datos.push_back(acum);
     }
 
-    cin >> e;
-    
-    for(int i = 0; i < e; i++){
+    int n_preguntas, cota_baja, cota_alta;
+    cin >> n_preguntas;
 
-        cin >> anyo1;
-        cin >> anyo2;
-        cout << resolver(v, anyo1, anyo2) << "\n";
-
+    for(int i = 0; i < n_preguntas; i++){
+        cin >> cota_baja;
+        cin >> cota_alta;
+        cout << resolver(datos, anyo_min, cota_baja, cota_alta) << "\n";
     }
 
     cout << "---\n";
-
+        
     return true;
     
 }
