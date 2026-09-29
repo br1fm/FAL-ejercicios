@@ -9,8 +9,20 @@
 
 using namespace std;
 
-//para todo i , j : 0 =< i < j < datos.size
-//Invariante: 
+//Invariante:
+//  unocero_cont contiene el número de unos menos
+//  el número de ceros de los primeros i elementos del vector.
+//  mientras que ret representa el mayor índice en el cual el número
+//  de unos menos el número de ceros es 0. En caso de no encontrarse ninguno,
+//  la función va a devolver -1.
+//Cota superior:
+//  el máximo de datos a procesar por la función es datos.size()
+//Cota inferior:
+//  el mínimo de datos a procesar por la función es 0, ya que si el vector está vacío
+//  este caso también se trata, devolviendo -1.
+//Complejidad: solo se recorren los datos del vector una sola vez
+//  por lo que la complejidad es O(n) siendo n el número de datos del
+//  vector
 int resolver(const vector<int> & datos) {
 
     int unocero_cont = 0;
