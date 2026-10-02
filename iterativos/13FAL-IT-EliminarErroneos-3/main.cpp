@@ -11,19 +11,16 @@ using namespace std;
 
 // función que resuelve el problema
 vector<long long int> resolver(vector<long long int> datos, long long int error) {
-    int cont_despl = 0, cont_error = 0, prim_err = 0;
+
+    int pos = 0;
     for(int i = 0; i < datos.size(); i++){
-        if(datos[i] == error){
-            if(cont_error == 0) prim_err = i;
-            cont_error++;
-        }
-        else if(cont_error != 0){
-            datos[prim_err + cont_despl] = datos[i];
-            cont_despl++;
+        if(datos[i] != error){
+            datos[pos] = datos[i];
+            pos++;
         }
     }
 
-    datos.resize(datos.size() - cont_error);
+    datos.resize(pos);
     return datos;
 
 }
