@@ -15,9 +15,29 @@ typedef struct{
 }tSolucion;
 
 // función que resuelve el problema
-tSolucion resolver(const vector<int> & edificios, int altura_nave) {
-    tSolucion ret;
-    //TODO: hacer el bucle.
+tSolucion resolver(const vector<long long int> & edificios, int altura_nave) {
+
+    tSolucion aux, ret;
+    int cont_ventana = 0, cont_max = 0;
+
+    for(int i = 0; i < edificios.size(); i++){
+        if(edificios[i] <= altura_nave){
+            cont_ventana = 0;
+        } 
+        else{
+            if(cont_ventana == 0){
+                aux.cota_baja = i;
+            }
+            cont_ventana++;
+            aux.cota_alta = i;
+            if(cont_ventana > cont_max){
+                cont_max = cont_ventana;
+                ret.cota_alta = aux.cota_alta;
+                ret.cota_baja = aux.cota_baja;
+            }
+        }
+    }
+
     return ret;
 }
 
@@ -28,7 +48,7 @@ void resuelveCaso() {
     int n_edificios, altura_nave;
     cin >> n_edificios;
     cin >> altura_nave;
-    vector<int> edificios(n_edificios);
+    vector<long long int> edificios(n_edificios);
     for(int i = 0; i < n_edificios; i++){
         cin >> edificios[i];
     }
