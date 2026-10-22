@@ -35,9 +35,7 @@ tSolucion resolver(const vector<int>& datos) {
 
             int longitud_actual = i - inicio_actual + 1;
 
-            if (acum > ret.rendimiento || (acum == ret.rendimiento && longitud_actual < ret.longitud) || (acum == ret.rendimiento &&
-               longitud_actual == ret.longitud &&
-               inicio_actual > ret.inicio)) {
+            if (acum > ret.rendimiento || (acum == ret.rendimiento && longitud_actual <= ret.longitud)) {
 
                 ret.rendimiento = acum;
                 ret.longitud = longitud_actual;
